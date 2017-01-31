@@ -1,6 +1,15 @@
+/*
+Deck.h: header file for Deck class
+Christien Chandler
+CSCI 487
+Special Project
+*/
+
 #pragma once
 #include <vector>
+#include <string>
 #include "Card.h"
+
 
 class Deck
 {
@@ -12,6 +21,8 @@ public:
 	~Deck();
 
 	void shuffle();
-	Card pop();
+	int size();
+	Card deal();
+	std::string printDeck();
 };
 

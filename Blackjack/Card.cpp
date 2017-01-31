@@ -1,5 +1,5 @@
 /*
-Card.h: header file for Card class
+Card.h: implementation file for Card class
 Christien Chandler
 CSCI 487
 Special Project
@@ -46,7 +46,7 @@ std::vector<std::string> Card::draw()
 			break;
 	case 4:	symbol = "\u2663"; // club
 			break;
-	default:symbol = "";
+	default:symbol = "F";
 			break;
 	}
 
@@ -67,13 +67,25 @@ std::vector<std::string> Card::draw()
 			break;
 	}
 
-
 	retVal[0] = "+-----+";
-	retVal[1] = "|" + pip + "    |";
+	if (pip == "10") retVal[1] = "|" + pip + "   |";
+	else retVal[1] = "|" + pip + "    |";
 	retVal[2] = "|  " + symbol + "  |";
-	retVal[3] = "|    " + pip + "|";
+	if (pip == "10") retVal[3] = "|   " + pip + "|";
+	else retVal[3] = "|    " + pip + "|";
 	retVal[4] = "+-----+";
 	return retVal;
+}
+
+std::vector<std::string> Card::drawBlank()
+{
+	std::vector<std::string> blank(5);
+	blank[0] = "+-----+";
+	blank[1] = "+*****+";
+	blank[2] = "+*****+";
+	blank[3] = "+*****+";
+	blank[4] = "+-----+";
+	return blank;
 }
 
 // changes the value of ace to the input value
@@ -83,6 +95,12 @@ void Card::setAce(int newvalue)
 	{
 		value = newvalue;
 	}
+}
+
+// returns number of card
+int Card::getNumber()
+{
+	return number;
 }
 
 // returns value of card
@@ -95,4 +113,43 @@ int Card::getValue()
 int Card::getSuit()
 {
 	return suit;
+}
+
+// returns a short version of the card's name and value
+std::string Card::shortName() 
+{
+	std::string retVal;
+
+	switch (number)
+	{
+	case 11:retVal += "J";
+		break;
+	case 12:retVal += "Q";
+		break;
+	case 13:retVal += "K";
+		break;
+	case 14:retVal += "A";
+		break;
+	default:std::string result;
+		std::ostringstream convert;
+		convert << number;
+		retVal += convert.str();
+		break;
+	}
+
+	switch (suit)
+	{
+	case 1: retVal += "\u2660"; // spade
+		break;
+	case 2: retVal += "\u2665"; // heart
+		break;
+	case 3: retVal += "\u2666"; // diamond
+		break;
+	case 4:	retVal += "\u2663"; // club
+		break;
+	default:retVal += "";
+		break;
+	}
+
+	return retVal;
 }
